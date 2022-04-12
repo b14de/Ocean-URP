@@ -8,6 +8,7 @@ namespace OceanSystem
     {
         [SerializeField] private ComputeShader _computeShader;
         [SerializeField] private Renderer _debug;
+        [SerializeField] private bool _showTurbulence;
 
         private RenderTexture _target;
         private const int TargetResolution = 512;
@@ -15,22 +16,29 @@ namespace OceanSystem
 
         void Start()
         {
+  
+            
             _target = new RenderTexture(TargetResolution, TargetResolution, 0,
                 RenderTextureFormat.R16, RenderTextureReadWrite.Linear);
             _target.enableRandomWrite = true;
             _target.Create();
-
             _debug.sharedMaterial.SetTexture("_MainTex", _target);
         }
 
         void Update()
         {
+            if (_showTurbulence)
+            {
+                _debug.sharedMaterial.SetTexture("_MainTex",Shader.GetGlobalTexture(GlobalShaderVariables.Simulation.Turbulence));
+                return;
+            }
+
             if (frame < 5)
             {
                 frame += 1;
                 return;
             }
-
+            
             _computeShader.SetVector("LengthScales",
                 Shader.GetGlobalVector(GlobalShaderVariables.Simulation.LengthScales));
             _computeShader.SetInt("CascadesCount", 4);

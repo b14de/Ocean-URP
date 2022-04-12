@@ -237,15 +237,43 @@ float3 GetOceanColor(LightingInput li, FoamData foamData)
 	return color;
 }
 
-float3 GetOceanColorUnderwater(LightingInput li)
+float3 GetOceanColorUnderwater(LightingInput li, FoamData foamData)
 {
+	float3 foamLitColor = 0;
+	#if defined(WAVES_FOAM_ENABLED) || defined(CONTACT_FOAM_ENABLED)
+	foamLitColor = LitFoamColor(li, foamData);
+	#endif
+
+	float3 tangentY = float3(0.0, li.normal.z, -li.normal.y);
+	tangentY /= max(0.001, length(tangentY));
+	float3 tangentX = cross(tangentY, li.normal);
+    
+	BrunetonInputs bi;
+	bi.lightDir_windSpace = mul(Ocean_WorldToWindSpace, float4(li.mainLight.direction, 0)).xyz;
+	bi.viewDir_windSpace = mul(Ocean_WorldToWindSpace, float4(li.viewDir, 0)).xyz;
+	bi.normal_windSpace = mul(Ocean_WorldToWindSpace, float4(li.normal, 0)).xyz;
+	bi.tangentX_windSpace = mul(Ocean_WorldToWindSpace, float4(tangentX, 0)).xyz;
+	bi.tangentY_windSpace = mul(Ocean_WorldToWindSpace, float4(tangentY, 0)).xyz;
+	bi.slopeVarianceSquared = _RoughnessScale * (1 + li.roughnessMap * 0.3)
+		* SlopeVarianceSquared(Ocean_WindSpeed * Ocean_WavesScale, li.viewDist,
+		Ocean_WavesAlignement, _RoughnessDistance);
+	
+	float3 specular = Specular(li, bi) * Pow5(1 - foamData.coverage.y);
+	float4 horizon = HorizonBlend(li);
+	
 	const float n = 1.1;
 	float3 refractionDir = refract(-li.viewDir, -li.normal, n);
 	
 	float fresnel = max(ShlickFresnel(li.viewDir, li.normal), dot(refractionDir, refractionDir) < 0.5);
+	
 	float3 refracted = RefractionBackface(li, refractionDir);
 	float3 reflected = ReflectionBackface(li);
-	float3 color = lerp(refracted, reflected, fresnel);
+	float3 color = specular + lerp(refracted, reflected, fresnel);
+	#if defined(WAVES_FOAM_ENABLED) || defined(CONTACT_FOAM_ENABLED)
+	color = lerp(color, foamLitColor, foamData.coverage.x);
+	#endif
+	color = lerp(color, horizon.rgb, horizon.a);
+	
 	float3 volume = UnderwaterFogColor(li.viewDir, li.mainLight.direction, li.cameraPos.y);
     color = ColorThroughWater(color, volume, li.viewDist - _ProjectionParams.y, 0);
 	return color;

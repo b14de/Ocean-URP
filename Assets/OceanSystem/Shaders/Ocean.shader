@@ -47,6 +47,7 @@ Shader "Ocean/Ocean"
         // foam
         [Tab(Tabs Foam)]
         [Toggle(WAVES_FOAM_ENABLED)] _WAVES_FOAM_ENABLED("Waves Foam", Float) = 0
+        [Toggle(WAVES_FOAM_DEBUG)] _WAVES_FOAM_DEBUG("Waves Foam Debug View", Float) = 0
         [Toggle(CONTACT_FOAM_ENABLED)] _CONTACT_FOAM_ENABLED("Contact Foam", Float) = 0
         [CompactTexture(UniformScaleOnly)]
         _FoamAlbedo("Albedo", 2D) = "white" {}
@@ -83,6 +84,7 @@ Shader "Ocean/Ocean"
             #pragma multi_compile _ OCEAN_UNDERWATER_ENABLED
             #pragma multi_compile _ OCEAN_TRANSPARENCY_ENABLED
             #pragma shader_feature_local WAVES_FOAM_ENABLED
+            #pragma shader_feature_local WAVES_FOAM_DEBUG
             #pragma shader_feature_local CONTACT_FOAM_ENABLED
 
             // URP Keywords
@@ -170,7 +172,7 @@ Shader "Ocean/Ocean"
                 fi.viewDir = viewDir;
                 fi.normal = normal;
                 FoamData foamData = GetFoamData(fi);
-
+                                
                 float4 shadowCoord = 0;
                 #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR)
                     shadowCoord = input.shadowCoord;
@@ -216,7 +218,7 @@ Shader "Ocean/Ocean"
                     li.normal = reflect(li.normal, li.viewDir);
                 }
                 if (underwater)
-                    oceanColor = GetOceanColorUnderwater(li);
+                    oceanColor = GetOceanColorUnderwater(li, foamData);
                 else
                     oceanColor = GetOceanColor(li, foamData);
                 #else
@@ -225,6 +227,14 @@ Shader "Ocean/Ocean"
                 oceanColor = GetOceanColor(li, foamData);
                 #endif
 
+                #if defined(WAVES_FOAM_DEBUG)
+                float4x4 fTurbulence = SampleTurbulence(input.worldUV, lodWeights * shoreWeights);
+                float4 turbulence = MixTurbulence(fTurbulence, Ocean_FoamCascadesWeights, lodWeights * ACTIVE_CASCADES);
+                float foamValueCurrent = lerp(turbulence.y, turbulence.x, Ocean_FoamSharpness);
+                float4 finalColor = float4(foamValueCurrent, 0, 0, 1);
+                    return finalColor;
+                #endif
+                
                 return float4(oceanColor, 1);
             }
             ENDHLSL
