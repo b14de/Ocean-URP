@@ -28,7 +28,7 @@ MonoBehaviour:
     coverage: 0.551
     density: 9
     sharpness: 0.72
-    persistence: 0.917
+    persistence: 0.77
     trail: 0
     trailTextureStrength: 1
     trailTextureSize: {x: 100, y: 40}

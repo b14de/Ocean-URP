@@ -16,7 +16,7 @@ namespace OceanSystem
         [SerializeField] private float _swellDirection;
         [Range(0, 1)]
         [SerializeField] private float _windForce01;
-
+        
         public OceanCollision Collision => _collision;
         
         private readonly OceanSimulationInputs _inputs = new OceanSimulationInputs();

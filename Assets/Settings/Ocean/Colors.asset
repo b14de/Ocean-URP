@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371a7bc07364d16479bb575e841e8c40, type: 3}
   m_Name: Colors
   m_EditorClassIdentifier: 
-  _deepScatter: {r: 0, g: 0.011764706, b: 0.039215688, a: 1}
+  _deepScatter: {r: 0.0016613209, g: 0.04107111, b: 0.066037714, a: 1}
   _shallowScatter: {r: 0, g: 1, b: 0.8926091, a: 1}
   _diffuse: {r: 0, g: 0.025490196, b: 0.033333335, a: 1}
   _reflectionMask: {r: 0, g: 0.113059565, b: 0.1509434, a: 1}

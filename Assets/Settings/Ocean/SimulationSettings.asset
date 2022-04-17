@@ -17,8 +17,8 @@ MonoBehaviour:
   _anisoLevel: 6
   _simulateFoam: 1
   _updateSpectrum: 1
-  _readbackCascades: 0
-  _samplingIterations: 3
+  _readbackCascades: 2
+  _samplingIterations: 5
   _domainsMode: 0
   _simulationScale: 1353.61
   _allowOverlap: 1
