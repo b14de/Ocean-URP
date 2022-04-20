@@ -21,6 +21,8 @@ namespace Code.Managers
 
         public void Start()
         {
+            _contextualUIController = new ContextualUIController();
+            
             ManagerDirectory.EventManager.RegisterListener(EventType.ContextChanging, () =>
             {
                 _contextualUIController.ContextChanging(ManagerDirectory.ContextManager.CurrentContextType);
@@ -40,6 +42,12 @@ namespace Code.Managers
         {
             
         }
+        		
+        public void SetLoadingWorldText()
+        {
+            _contextualUIController.SetMessage("Loading World for " + ManagerDirectory.GameManager.CurrentGameDescription.Type + "Game Mode");
+        }
+
 
         #endregion
 

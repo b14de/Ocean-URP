@@ -25,7 +25,7 @@ namespace Code.View.Context
         public void Setup()
         {
             GetComponentsForUI();
-            ManagerDirectory.EventManager.RegisterListener(EventType.PlayerHealthChanged, SetHealthBar);
+            ManagerDirectory.EventManager?.RegisterListener(EventType.PlayerHealthChanged, SetHealthBar);
         }
 
         #endregion
@@ -45,8 +45,7 @@ namespace Code.View.Context
 
         private void OnDestroy()
         {
-            ManagerDirectory.EventManager.DeregisterListener(EventType.PlayerHealthChanged, SetHealthBar);
-
+            ManagerDirectory.EventManager?.DeregisterListener(EventType.PlayerHealthChanged, SetHealthBar);
         }
 
         #endregion

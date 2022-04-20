@@ -61,7 +61,7 @@ namespace Code.View.Context
         {
             _cancelButton.onClick.AddListener(() =>
             {
-                ManagerDirectory.EventManager.Trigger(EventType.CancelDownloadRequested);   //TODO: Use cancellation token instead
+                ManagerDirectory.EventManager.Trigger(EventType.CancelLoadingRequested);   //TODO: Use cancellation token instead
             });
         }
         #endregion

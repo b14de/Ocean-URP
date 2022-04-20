@@ -1,4 +1,6 @@
 using Code.Managers;
+using Code.Model;
+using Code.Utilities;
 using Code.View.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +33,12 @@ namespace Code.View.Context
         {
             _playButton.onClick.AddListener(() =>
             {
+                EventDataStore.AddData(EventType.StartGameRequested, new GameDescription()
+                {
+                    Type = GameDescription.GameType.SinglePlayer,
+                    Difficulty = GameDescription.GameDifficulty.Medium
+                });
+                
                 ManagerDirectory.EventManager.Trigger(EventType.StartGameRequested);
             });
         }

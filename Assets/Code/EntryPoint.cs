@@ -1,3 +1,4 @@
+using System;
 using Code.Managers;
 using UnityEngine;
 
@@ -24,6 +25,11 @@ namespace Code
         private void LateUpdate()
         {
             _managerDirectory.UpdateLateUpdatableManagers();
+        }
+
+        private void FixedUpdate()
+        {
+            _managerDirectory?.UpdateFixedUpdatableManagers();
         }
 
         private void OnApplicationQuit()

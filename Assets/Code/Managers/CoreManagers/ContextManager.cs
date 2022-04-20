@@ -42,6 +42,21 @@ namespace Code.Managers
 		{
 			_targetContext 					= targetContext;
 		}
+
+		public float GetSceneRequestProgress()
+		{
+			return _sceneController.SceneRequestProgress();
+		}
+		
+		public bool GetSceneRequestHasCompleted()
+		{
+			return _sceneController.SceneRequestHasLoaded();
+		}
+		
+		public bool GetSceneRequestHasErrored()
+		{
+			return _sceneController.SceneRequestHasLoaded();
+		}
 		#endregion
 
 		
@@ -114,7 +129,7 @@ namespace Code.Managers
 			
 			if (SceneMapper.HasAssociatedScene(CurrentContextType))
 			{
-				_sceneController.LoadSceneAsync(SceneMapper.GetSceneName(CurrentContextType));
+				_sceneController.LoadSceneAsync(SceneMapper.GetSceneName(CurrentContextType), SceneMapper.GetSetAsActive(CurrentContextType));
 			}
 			else
 			{

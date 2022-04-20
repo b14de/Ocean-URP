@@ -8,6 +8,7 @@ namespace Code
         Error,
         AppExitRequested,
         StartGameRequested,
+        StartGame,
         // ----------------------------------------------
         
         // Gameplay Player --------------------------------
@@ -21,7 +22,7 @@ namespace Code
         // Gameplay Inputs Player ------------------------------
         PlayerAttack,
         
-        //Backend ---------------------------------------
-        CancelDownloadRequested
+        //Loading ---------------------------------------
+        CancelLoadingRequested
     }
 }

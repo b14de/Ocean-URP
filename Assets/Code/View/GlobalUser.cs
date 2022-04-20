@@ -46,7 +46,7 @@ namespace Code.View
         private void GetGlobalCamera()
         {
             _camera = _loadedUser.GetComponent<Camera>();
-        }
+        }   
 
         private void LoadStandardUser()
         {

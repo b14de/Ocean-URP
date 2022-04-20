@@ -4,7 +4,7 @@ namespace Code.ContextSystem
     {
         Startup,
         MainMenu,
-        LoadingLevel,
+        LoadingGameWorld,
         InGame,
         Error
     }

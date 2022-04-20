@@ -54,7 +54,7 @@ namespace Code.Managers.UI
         
         public void SetLoadingProgress(float loadingProgress)
         {
-            if (_currentContext == ContextType.LoadingLevel)
+            if (_currentContext == ContextType.LoadingGameWorld)
             {
                 _loadingUI.SetNewProgress(loadingProgress);
             }
@@ -70,6 +70,18 @@ namespace Code.Managers.UI
             _errorUI.SetError(error);
         }
         
+        public void SetMessage(string message)
+        {
+            switch (_currentContext)
+            {
+                case ContextType.LoadingGameWorld:
+                    _loadingUI.SetSubtext(message);
+                    break;
+                default:
+                    // Other UIs dont have a message
+                    break;
+            }
+        }
         #endregion
 
         #region Implementation
@@ -81,7 +93,7 @@ namespace Code.Managers.UI
                     _mainMenuUI 			= GameObject.FindObjectOfType<MainMenuUI>();
                     _mainMenuUI.Setup();
                     break;
-                case ContextType.LoadingLevel:
+                case ContextType.LoadingGameWorld:
                     _loadingUI 					= GameObject.FindObjectOfType<LoadingUI>();
                     _loadingUI.Setup();
                     _loadingUI.HideCancelButton();

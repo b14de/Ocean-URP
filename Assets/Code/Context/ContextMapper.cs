@@ -9,7 +9,11 @@ namespace Code.ContextSystem
 		private static readonly Dictionary<ContextType, Context> 	ContextMap 		= new Dictionary<ContextType, Context>
 		{
 			{ContextType.Startup, 					new Startup()},
-			{ContextType.Error, 					new Error()}
+			{ContextType.MainMenu, 					new MainMenu()},
+			{ContextType.Error, 					new Error()},
+			{ContextType.LoadingGameWorld, 			new LoadingGameWorld()},
+			{ContextType.InGame, 			        new InGame()}
+
 		};
 		#endregion
 

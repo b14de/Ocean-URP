@@ -75,9 +75,12 @@ namespace DWP2
             {
                 int triCount = _waterObjectManager.TriangleCount;
                 int woCount = _waterObjectManager.WaterObjects.Count;
-                drawer.Info($"Simulating a total of {triCount} tris on " +
+                if (woCount > 0)
+                {
+                    drawer.Info($"Simulating a total of {triCount} tris on " +
                                 $"{woCount} WaterObject(s), avg. {triCount / woCount} tris per WaterObject.");
-                
+                }
+
                 drawer.Label($"Active Tri Count: {_waterObjectManager.ActiveTriCount}");
                 drawer.Label($"Active Underwater Tri Count: {_waterObjectManager.ActiveUnderwaterTriCount}");
                 drawer.Label($"Active Above Water Tri Count: {_waterObjectManager.ActiveAboveWaterTriCount}");

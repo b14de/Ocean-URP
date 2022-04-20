@@ -9,4 +9,9 @@ namespace Code.Managers
     {
         void 	LateUpdate();
     }
+    
+    public interface IFixedUpdatable
+    {
+        void 	FixedUpdate();
+    }
 }

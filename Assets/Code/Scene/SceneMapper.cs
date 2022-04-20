@@ -8,12 +8,20 @@ namespace Code.Scene
     public class SceneMapper
     {
         #region Fields
-        private static readonly Dictionary<ContextType, string> 		_contextScenes 		= new Dictionary<ContextType, string>
+        private struct SceneMap
         {
-            {ContextType.InGame, 		        FileNames.Scenes.MAINWORLD},
-            {ContextType.MainMenu, 				FileNames.Scenes.MAINMENU},
-            {ContextType.Error, 				FileNames.Scenes.ERROR}
+            public string SceneName;
+            public bool   SetAsActive;
+        }
+        
+        private static readonly Dictionary<ContextType, SceneMap> 		_contextScenes 		= new Dictionary<ContextType, SceneMap>
+        {
+            {ContextType.InGame, 		        new SceneMap{ SceneName = FileNames.Scenes.MAINWORLD, SetAsActive = true}},
+            {ContextType.MainMenu, 				new SceneMap{ SceneName = FileNames.Scenes.MAINMENU, SetAsActive  = false}},
+            {ContextType.LoadingGameWorld, 		new SceneMap{ SceneName = FileNames.Scenes.LOADING, SetAsActive   = false}},
+            {ContextType.Error, 				new SceneMap{ SceneName = FileNames.Scenes.ERROR, SetAsActive     = false}},
         };
+  
         #endregion
 		
         #region
@@ -26,11 +34,22 @@ namespace Code.Scene
         {
             if (_contextScenes.ContainsKey(context))
             {
-                return _contextScenes[context];
+                return _contextScenes[context].SceneName;
             }
 
             DebugLogger.LogError("Scene not found for " + context);
             return "";
+        }
+        
+        public static bool GetSetAsActive(ContextType context)
+        {
+            if (_contextScenes.ContainsKey(context))
+            {
+                return _contextScenes[context].SetAsActive;
+            }
+
+            DebugLogger.LogError("Scene not found for " + context);
+            return false;
         }
         #endregion
     }

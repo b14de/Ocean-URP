@@ -6,7 +6,7 @@ namespace Code.Utilities.FileSystem
         {
             #region Fields
             public const string 					LOADING 							= "Loading";
-            public const string 					MAINWORLD       					= "GameplayArea";
+            public const string 					MAINWORLD       					= "GameplayArena";
             public const string						MAINMENU    						= "MainMenu";
             public const string 					ERROR 								= "Error";
             #endregion
