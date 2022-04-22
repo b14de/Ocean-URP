@@ -172,10 +172,10 @@ Material:
     - _SssEnvironmentStrength: 0.413
     - _SssFadeDistance: 30
     - _SssHeight: 0.2
-    - _SssHeightBias: 0.23
+    - _SssHeightBias: 0.361
     - _SssHeightMult: 0.63
     - _SssNormalStrength: 0.752
-    - _SssSpread: 0.246
+    - _SssSpread: 0.704
     - _SssSunStrength: 0.218
     - _Surface: 0
     - _TRANSPARENCY_ENABLED: 1
